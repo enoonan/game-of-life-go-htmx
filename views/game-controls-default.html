@@ -1,0 +1,19 @@
+{{ define "game-controls-default" }}
+<div id="game-controls">
+  <button
+    hx-post="{{ .Host }}/games/{{ .Game.Id }}/next"
+    hx-target="#game-board"
+    hx-swap="outerHTML"
+  >
+    Next
+  </button>
+  <button
+    hx-get="{{ .Host }}/games/{{ .Game.Id }}/runner"
+    hx-target="#game-controls"
+    hx-swap="outerHTML"
+  >
+    Run (every 1s)
+  </button>
+</div>
+
+{{ end }}

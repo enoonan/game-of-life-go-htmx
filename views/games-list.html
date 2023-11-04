@@ -1,0 +1,10 @@
+{{ define "games-list" }}
+<ul role="list" hx-boost="true">
+    {{ $host := .Host }}
+    {{ range .Games }}
+    <li>
+        <a href="{{ $host }}/games/{{ .Id }}">{{ .Name }}</a>
+    </li>
+    {{ end }}
+</ul>
+{{ end }}

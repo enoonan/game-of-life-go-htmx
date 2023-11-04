@@ -1,0 +1,19 @@
+{{ define "game-controls-running" }}
+<div id="game-controls">
+  <span
+    hx-post="{{ .Host }}/games/{{ .Game.Id }}/next"
+    hx-trigger="every 1s"
+    hx-target="#game-board"
+    hx-swap="outerHTML"
+  >
+  </span>
+  <button
+    hx-get="{{ .Host }}/games/{{ .Game.Id }}/cancel-runner"
+    hx-target="#game-controls"
+    hx-swap="outerHTML"
+  >
+    Cancel (running every 1s...)
+  </button>
+</div>
+
+{{ end }}

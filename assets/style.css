@@ -1,0 +1,26 @@
+      #game-board {
+        margin: 20px;
+      }
+      .bg-white {
+        background-color: white;
+      }
+      .bg-black {
+        background-color: black;
+      }
+      .grid-container {
+        display: grid;
+        grid-gap: 1px; /* Space between cells, serving as the faint border */
+      }
+
+      /* Each cell in the grid */
+      .grid-item {
+        width: 100%;
+        /* padding-top: 100%; This ensures that each grid item is a square */
+        box-sizing: border-box;
+        transition: background-color 0.5s ease-in-out;
+      }
+      .grid-item::before {
+        content: '';
+        display: block;
+        padding-top: 100%; /* This creates a square aspect ratio */
+      }

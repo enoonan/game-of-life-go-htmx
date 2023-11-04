@@ -1,0 +1,86 @@
+{{ define "index" }}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Game of Life</title>
+    <script
+      src="https://unpkg.com/htmx.org@1.9.6"
+      integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.1" />
+    <link rel="stylesheet" href="{{ .Host }}/static/style.css" />
+
+    <style>
+      .grid-container {
+        grid-template-columns: repeat({{ .Game.Dimension }}, 1fr); 
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar-layout fullscreen">
+      <header>
+        <div class="<h1>">Game of Life</div>
+        <nav>
+          <ul role="list">
+            <li><a href="/" aria-current="page" hx-boost="true">Home</a></li>
+            <li>
+              <strong>
+                <a hx-post="{{ .Host }}/games" hx-boost="true" class="<button>">
+                  New Game
+                </a>
+              </strong>
+            </li>
+          </ul>
+          <span hx-trigger="load" hx-get="/games"></span>
+        </nav>
+      </header>
+      <div>
+        {{ block "main-element" . }}
+          <main class="box margin grid-even-rows">
+            <h1>Let's Play<v-h>:</v-h>
+              <sub-title>{{ .Game.Name }}</sub-title>
+              <sub-title>{{ .Game.Dimension }} x {{ .Game.Dimension }} Grid</sub-title>
+            </h1>
+
+            {{ block "board-container" . }}
+              <div id="board-container">
+                <section class="toolbar margin block">
+                  {{ if .Game.Dead }}
+                    <div class="box bad"><em>GAME OVER MAN! GAME OVER!!!!!</em></div>
+                    <button hx-post="{{ .Host }}/games" hx-target="main" hx-swap="outerHTML"> 
+                      New Game
+                    </button>
+                  {{ else }}
+                    {{ template "game-controls-default" . }}
+                  {{ end }}
+                </section>
+                {{ block "game-board" . }}
+                  {{ with .Game.Board }} 
+                    <div id="game-board" class="grid-container">
+                      {{ range $r, $row := .}}
+                      <!-- <div class=""> -->
+                        {{ range $j, $cell := $row }} 
+                          {{ if eq $cell 1 }}
+                            <div class="grid-item bg-black"></div>
+                          {{ else }}
+                            <div class="grid-item bg-white"></div>
+                          {{ end }} 
+                        {{ end }}
+                      <!-- </div> -->
+                      {{ end }} 
+                    </div>
+                  {{ end }} 
+                {{ end }}
+              </div>
+            {{ end }}
+          </main>
+        {{ end }}
+        <footer>💜 Eileen Noonan
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
+{{ end }}
+```
